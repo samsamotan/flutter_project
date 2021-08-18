@@ -46,68 +46,144 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
+  String dropdownValue = 'a';
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
+      // drawer: Drawer(
+      //   child: ListView(
+      //     children: [
+      //       const DrawerHeader(
+      //         decoration: BoxDecoration(
+      //           color: Colors.blue,
+      //         ),
+      //         child: Text('Drawer Header'),
+      //       ),
+      //       ListTile(
+      //         title: const Text('Item 1'),
+      //         onTap: () {},
+      //       ),
+      //       ListTile(
+      //         title: const Text('Item 2'),
+      //         onTap: () {},
+      //       ),
+      //     ],
+      //   ),
+      // ),
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        centerTitle: true,
+        title: DropdownButton<String>(
+          value: dropdownValue,
+          icon: Icon(Icons.arrow_drop_down_outlined),
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+            });
+          },
+          items: <String>['a', 'b', 'c', 'd']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: Row(
+        children: [
+          Container(
+            color: Colors.grey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  '2021',
+                ),
+                Text(
+                  'Wednesday',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Text(
+                  'Aug 18',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.arrow_left),
+                    Text('August 2021'),
+                    Icon(Icons.arrow_right),
+                  ],
+                ),
+                // GridView.count(crossAxisCount: 7, shrinkWrap: true, children: [
+                //   Padding(
+                //     padding: const EdgeInsets.all(10),
+                //     child: Container(
+                //       child: Text('S'),
+                //     ),
+                //   ),
+                //   Padding(
+                //     padding: const EdgeInsets.all(10),
+                //     child: Container(
+                //       child: Text('M'),
+                //     ),
+                //   ),
+                //   Padding(
+                //     padding: const EdgeInsets.all(10),
+                //     child: Container(
+                //       child: Text('T'),
+                //     ),
+                //   ),
+                //   Padding(
+                //     padding: const EdgeInsets.all(10),
+                //     child: Container(
+                //       child: Text('W'),
+                //     ),
+                //   ),
+                //   Padding(
+                //     padding: const EdgeInsets.all(10),
+                //     child: Container(
+                //       child: Text('T'),
+                //     ),
+                //   ),
+                //   Padding(
+                //     padding: const EdgeInsets.all(10),
+                //     child: Container(
+                //       child: Text('F'),
+                //     ),
+                //   ),
+                //   Padding(
+                //     padding: const EdgeInsets.all(10),
+                //     child: Container(
+                //       child: Text('S'),
+                //     ),
+                //   ),
+                // ]),
+                GridView.count(
+                  crossAxisCount: 7,
+                  shrinkWrap: true,
+                  children: List.generate(
+                    31,
+                    (index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Container(
+                          child: Text(index.toString()),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
